@@ -1,10 +1,9 @@
 GoFastBikes::Application.routes.draw do
   get "pages/home"
-
   get "pages/contact"
-
+  get "pages/about"
+  
   resources :products
-
   resources :users
 
   # The priority is based upon order of creation:
