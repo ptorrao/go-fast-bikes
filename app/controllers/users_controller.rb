@@ -64,6 +64,10 @@ class UsersController < ApplicationController
     end
     
     def admin_user
-      redirect_to(root_path) unless signed_in? && current_user.admin?
+      if signed_in?
+        redirect_to(root_path) unless current_user.admin?
+      else 
+        redirect_to(signin_path)
+      end
     end
 end
