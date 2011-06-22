@@ -63,4 +63,36 @@ describe OrdersController do
       end
     end
   end
+  
+  describe "DELETE 'destroy'" do
+
+    describe "for an unauthorized user" do
+
+      before(:each) do
+        @user = Factory(:user)
+        wrong_user = Factory(:user, :email => Factory.next(:email))
+        test_sign_in(wrong_user)
+        @order = Factory(:order, :user => @user)
+      end
+
+      it "should deny access" do
+        delete :destroy, :id => @order
+        response.should redirect_to(root_path)
+      end
+    end
+
+    describe "for an authorized user" do
+
+      before(:each) do
+        @user = test_sign_in(Factory(:user))
+        @order = Factory(:order, :user => @user)
+      end
+
+      it "should destroy the order" do
+        lambda do 
+          delete :destroy, :id => @order
+        end.should change(Order, :count).by(-1)
+      end
+    end
+  end
 end

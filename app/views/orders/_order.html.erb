@@ -5,4 +5,11 @@
       Created <%= time_ago_in_words(order.created_at) %> ago.
     </span>
   </td>
+  <% if current_user?(order.user) %>
+  <td>
+    <%= link_to "delete", order, :method => :delete,
+                                 :confirm => "You sure?",
+                                 :title => order.notes %>
+  </td>
+  <% end %>
 </tr>
