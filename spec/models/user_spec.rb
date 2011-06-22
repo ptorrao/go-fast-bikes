@@ -146,4 +146,28 @@ describe User do
       @user.should be_admin
     end
   end
+  
+  describe "order associations" do
+    
+    before(:each) do
+      @user = User.create(@attr)
+      @order1 = Factory(:order, :user => @user, :created_at => 1.day.ago)
+      @order2 = Factory(:order, :user => @user, :created_at => 1.hour.ago)
+    end
+    
+    it "should have a orders attribute" do
+      @user.should respond_to(:orders)
+    end
+    
+    it "should have the right orders in the right order" do
+      @user.orders.should == [@order2, @order1]
+    end
+    
+    it "should destroy associated orders" do
+      @user.destroy
+      [@order1, @order2].each do |order|
+        Order.find_by_id(order.id).should be_nil
+      end
+    end
+  end
 end

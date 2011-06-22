@@ -2,6 +2,7 @@ GoFastBikes::Application.routes.draw do
   resources :products
   resources :users
   resources :sessions, :only => [:new, :create, :destroy]
+  resources :orders,   :only => [:create, :destroy]
 
   match '/signin',  :to => 'sessions#new'
   match '/signout', :to => 'sessions#destroy'

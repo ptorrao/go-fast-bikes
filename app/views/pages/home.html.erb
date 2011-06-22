@@ -1,8 +1,19 @@
-<h1>Home</h1>
-<p>
-	This is the home page for Go Fast Bikes
-</p>
-
-<% if !signed_in? %>
+<% if signed_in? %>
+	<table class="front" summary="For signed-in users">
+		<tr>
+			<td class="main">
+				<h1 class="order">What's up?</h1>
+				<%= render 'shared/order_form' %>
+			</td>
+			<td class="sidebar round">
+				<%= render 'shared/user_info' %>
+			</td>
+		</tr>
+	</table>
+<% else %>
+	<h1>Home</h1>
+	<p>
+		This is the home page for Go Fast Bikes
+	</p>
 	<%= link_to "Sign up now!", signup_path, :class => "signup_button round" %>
 <% end %>	

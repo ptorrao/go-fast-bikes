@@ -86,6 +86,14 @@ describe UsersController do
       get :show, :id => @user
       response.should have_selector("h1>img", :class => "gravatar")
     end
+    
+    it "should show the user's orders" do
+      order1 = Factory(:order, :user => @user, :notes => "Foo bar")
+      order2 = Factory(:order, :user => @user, :notes => "Bar foo")
+      get :show, :id => @user
+      response.should have_selector("span.notes", :content => order1.notes)  
+      response.should have_selector("span.notes", :content => order2.notes)
+    end
   end
 
   describe "GET 'new'" do

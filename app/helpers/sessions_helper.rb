@@ -38,6 +38,10 @@ module SessionsHelper
   
   private
   
+    def authenticate
+      deny_access unless signed_in?
+    end
+
     def user_from_remember_token
       User.authenticate_with_salt(*remember_token)
     end
@@ -52,5 +56,10 @@ module SessionsHelper
     
     def clear_return_to
       session[:return_to] = nil
+    end
+
+    def deny_access
+      store_location
+      redirect_to signin_path, :notice => "Please sign in to access this page."
     end
 end

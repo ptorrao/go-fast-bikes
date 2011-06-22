@@ -8,3 +8,8 @@ end
 Factory.sequence :email do |n|
   "person-#{n}@example.com"
 end
+
+Factory.define :order do |order|
+  order.notes "I need this to be dispatched as soon as possible!"
+  order.association :user
+end
