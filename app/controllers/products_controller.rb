@@ -1,83 +1,31 @@
 class ProductsController < ApplicationController
-  # GET /products
-  # GET /products.xml
+  before_filter :authenticate, :only => [:create, :destroy]
+  before_filter :authorized_user, :only => :destroy
+  
   def index
-    @products = Product.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @products }
-    end
+    @title = "All Products"
+    @products = Product.paginate(:page => params[:page])
   end
 
-  # GET /products/1
-  # GET /products/1.xml
-  def show
-    @product = Product.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @product }
-    end
-  end
-
-  # GET /products/new
-  # GET /products/new.xml
-  def new
-    @product = Product.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @product }
-    end
-  end
-
-  # GET /products/1/edit
-  def edit
-    @product = Product.find(params[:id])
-  end
-
-  # POST /products
-  # POST /products.xml
   def create
-    @product = Product.new(params[:product])
-
-    respond_to do |format|
-      if @product.save
-        format.html { redirect_to(@product, :notice => 'Product was successfully created.') }
-        format.xml  { render :xml => @product, :status => :created, :location => @product }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @product.errors, :status => :unprocessable_entity }
-      end
-    end
+    @product = current_user.product.build(params[:product])
+    if @product.save
+      flash[:success] = "Product created!"
+      redirect_to root_path
+    else
+      flash[:failure] = "Couldn't create the product..."
+    end  
   end
 
-  # PUT /products/1
-  # PUT /products/1.xml
-  def update
-    @product = Product.find(params[:id])
-
-    respond_to do |format|
-      if @product.update_attributes(params[:product])
-        format.html { redirect_to(@product, :notice => 'Product was successfully updated.') }
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @product.errors, :status => :unprocessable_entity }
-      end
-    end
-  end
-
-  # DELETE /products/1
-  # DELETE /products/1.xml
   def destroy
-    @product = Product.find(params[:id])
     @product.destroy
-
-    respond_to do |format|
-      format.html { redirect_to(products_url) }
-      format.xml  { head :ok }
-    end
+    redirect_back_or root_path
   end
+  
+  private
+  
+    def authorized_user
+      @product = current_user.products.find_by_id(params[:id])
+      redirect_to root_path if @product.nil?
+    end
 end

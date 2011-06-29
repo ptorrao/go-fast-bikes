@@ -13,3 +13,9 @@ Factory.define :order do |order|
   order.notes "I need this to be dispatched as soon as possible!"
   order.association :user
 end
+
+Factory.define :product do |product|
+  product.name        "Product Name"
+  product.description "Product Description"
+  
+end

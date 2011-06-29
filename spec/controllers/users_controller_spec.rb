@@ -13,25 +13,36 @@ describe UsersController do
       end    
     end
     
-    describe "for signed-in users" do
+    describe "for signed-in non-admin users" do
       
       before(:each) do
         @user = test_sign_in(Factory(:user))
-        second = Factory(:user, :name => "Bob", :email => "another@example.com")
-        third  = Factory(:user, :name => "Ben", :email => "another@example.net")
+      end
+      
+      it "should not be successful" do
+        get :index
+        response.should_not be_success
+      end
+    end    
 
-        @users = [@user, second, third]
-        
+    describe "for signed-in admin users" do
+      before(:each) do
+        @admin_user = test_sign_in(Factory(:user, 
+                                     :email => "admin@example.com", 
+                                     :admin => true))
+      
+        @users = [@admin_user]
+            
         30.times do
           @users << Factory(:user, :email => Factory.next(:email))
         end
       end
-      
+
       it "should be successful" do
         get :index
         response.should be_success
       end
-      
+
       it "should have the right title" do
         get :index
         response.should have_selector("title", :content => "All users")
@@ -39,7 +50,7 @@ describe UsersController do
       
       it "should have an element for each user" do
         get :index
-        @users[0..2].each do |user|
+        @users[0..30].each do |user|
           response.should have_selector("td", :content => user.name)
         end
       end      
@@ -53,40 +64,41 @@ describe UsersController do
         response.should have_selector("a", :href => "/users?page=2",
                                            :content => "Next")
       end
-    end    
+    end
   end
 
   describe "GET 'show'" do
-    
+      
     before(:each) do
       @user = Factory(:user)
+      test_sign_in(@user)
     end
-    
+      
     it "should be successful" do
       get :show, :id => @user
       response.should be_success
     end
-    
+  
     it "should find the right user" do
       get :show, :id => @user
       assigns(:user).should == @user
     end
-    
+  
     it "should have the right title" do
       get :show, :id => @user
       response.should have_selector("title", :content => @user.name)
     end
-    
+  
     it "should include the user's name" do
       get :show, :id => @user
       response.should have_selector("h1", :content => @user.name)
     end
-    
+  
     it "should have a profile image" do
       get :show, :id => @user
       response.should have_selector("h1>img", :class => "gravatar")
     end
-    
+  
     it "should show the user's orders" do
       order1 = Factory(:order, :user => @user, :notes => "Foo bar")
       order2 = Factory(:order, :user => @user, :notes => "Bar foo")
@@ -268,13 +280,18 @@ describe UsersController do
     end  
   end
   
-  describe "authentication of edit/update pages" do
+  describe "authentication of show/edit/update pages" do
     
     before(:each) do
       @user = Factory(:user)
     end
     
     describe "for non-signed-in users" do
+      
+      it "should deny access to 'show'" do
+        get :edit, :id => @user
+        response.should redirect_to(signin_path)
+      end
       
       it "should deny access to 'edit'" do
         get :edit, :id => @user
@@ -287,11 +304,16 @@ describe UsersController do
       end
     end    
     
-    describe "for signed-in users" do
+    describe "for signed-in non-admin users" do
       
       before(:each) do
         wrong_user = Factory(:user, :email => "user@example.net")
         test_sign_in(wrong_user)
+      end
+
+      it "should require matching users for 'show'" do
+        get :show, :id => @user
+        response.should redirect_to(root_path)
       end
       
       it "should require matching users for 'edit'" do
@@ -302,6 +324,21 @@ describe UsersController do
       it "should require matching users for 'update'" do
         put :update, :id => @user, :user => {}
         response.should redirect_to(root_path)
+      end
+    end
+    
+    describe "for signed-in admin users" do
+        
+      before (:each) do
+        admin = Factory(:user, 
+                        :email => "admin@example.com", 
+                        :admin => true)
+        test_sign_in(admin)
+      end
+        
+      it "should allow access to 'show'" do
+        get :show, :id => @user
+        response.should be_success
       end
     end
   end

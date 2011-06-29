@@ -1,7 +1,7 @@
 /* Container */
 
 .container {
-  width: 710px;
+  width: 800px;
 }
 
 body {
@@ -106,7 +106,7 @@ a.signup_button {
 footer {
   text-align: center;
   margin-top: 10px;
-  width: 710px;
+  width: 800px;
   margin-left: auto;
   margin-right: auto;
 }
