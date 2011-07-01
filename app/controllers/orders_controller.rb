@@ -1,6 +1,11 @@
 class OrdersController < ApplicationController
-  before_filter :authenticate, :only => [:create, :destroy]
-  before_filter :authorized_user, :only => :destroy
+  before_filter :authenticate, :only => [:index, :create, :destroy]
+  before_filter :authorized_user, :only => [:index, :destroy]
+
+  def index
+    @title = "All Orders"
+    @orders = @user.orders.paginate(:page => params[:page])
+  end
   
   def create
     @order = current_user.orders.build(params[:order])

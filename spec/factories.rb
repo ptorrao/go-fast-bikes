@@ -17,6 +17,7 @@ end
 Factory.define :product do |product|
   product.name        "Product Name"
   product.description "Product Description"
+  product.association :user
 end
 
 Factory.sequence :test do |n|

@@ -185,13 +185,12 @@ describe ProductsController do
   describe "GET 'edit'" do
     
     before(:each) do
-      @attr = { :name => "A new product name...", 
-                :description => "A new product description..." }
-
       admin = Factory(:user, 
                       :email => "admin@example.com", 
                       :admin => true)
       test_sign_in(admin)
+
+      @product = Factory(:product)
     end
     
     it "should be successful" do
@@ -202,6 +201,43 @@ describe ProductsController do
     it "should have the right title" do
       get :edit, :id => @product
       response.should have_selector("title", :content => "Edit Product")
+    end
+  end
+
+  describe "PUT 'update'" do
+
+    before(:each) do
+      admin = Factory(:user, 
+                      :email => "admin@example.com", 
+                      :admin => true)
+      test_sign_in(admin)
+      
+      @product = Factory(:product)
+    end
+    
+    describe "success" do
+      
+      before(:each) do
+        @attr = { :name => "updated name", 
+                  :description => "updated description" }
+      end
+
+      it "should change the product's attributes" do
+        put :update, :id => @product, :product => @attr
+        @product.reload
+        @product.name.should        == @attr[:name]
+        @product.description.should == @attr[:description]
+      end
+      
+      it "should redirect to the product show page" do
+        put :update, :id => @product, :product => @attr
+        response.should redirect_to(product_path(@product))
+      end  
+      
+      it "should have a flash message" do
+        put :update, :id => @product, :product => @attr
+        flash[:success].should =~ /updated/
+      end
     end
   end
 end

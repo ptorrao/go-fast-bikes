@@ -1,0 +1,19 @@
+<h1>All Orders</h1>
+
+<%= will_paginate %>
+
+<table>
+ 	<tr>
+    	<th></th>
+    	<th>Notes</th>
+    	<th>Created At</th>
+    	<th></th>
+    	<th></th>
+    	<th></th>
+  	</tr>
+	<%= render @orders %>
+</table>
+
+<%= will_paginate %>
+
+<br />

@@ -28,10 +28,13 @@ class ProductsController < ApplicationController
   end
 
   def edit
+    @product = Product.find(params[:id])
     @title = "Edit Product"
   end
 
   def update
+    @product = Product.find(params[:id])
+    
     if @product.update_attributes(params[:product])
       flash[:success] = "Product updated."
       redirect_to @product
@@ -62,8 +65,6 @@ class ProductsController < ApplicationController
         logger.debug "BEFORE FILTER|SIGNED IN: NOK!"
         redirect_to signin_path
       end
-
-#      signed_in? && current_user.admin?
     end
   
     def authorized_user
