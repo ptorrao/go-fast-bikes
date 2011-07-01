@@ -17,5 +17,16 @@ end
 Factory.define :product do |product|
   product.name        "Product Name"
   product.description "Product Description"
-  
+end
+
+Factory.sequence :test do |n|
+  "This is the product name - #{n}"
+end
+
+Factory.sequence :product_name do |n|
+  "This is the product name - #{n}"
+end
+
+Factory.sequence :product_description do |n|
+  "This is the product description - #{n}"
 end

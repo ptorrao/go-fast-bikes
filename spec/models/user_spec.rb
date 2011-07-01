@@ -187,4 +187,25 @@ describe User do
       end
     end
   end
+  
+  describe "product associations" do
+    
+    before(:each) do
+      @user = User.create(@attr)
+      @product1 = Factory(:product, 
+                          :name => "Test name 1", 
+                          :description => "Test description 1", 
+                          :user_id => @user, 
+                          :created_at => 1.day.ago)
+      @product2 = Factory(:product, 
+                          :name => "Test name 2", 
+                          :description => "Test description 2", 
+                          :user_id => @user, 
+                          :created_at => 1.day.ago)
+    end
+    
+    it "should have a products attribute" do
+      @user.should respond_to(:products)
+    end
+  end
 end

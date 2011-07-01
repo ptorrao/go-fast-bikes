@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
-  before_filter :authenticate, :only => [:index, :show, :edit, :update]
+  before_filter :authenticate,    :only => [:index, :show, :edit, :update]
   before_filter :authorized_user, :only => [:show, :edit, :update]
-  before_filter :admin_user,   :only => [:index, :destroy]
+  before_filter :admin_user,      :only => [:index, :destroy]
 
   def index
     @title = "All users"
