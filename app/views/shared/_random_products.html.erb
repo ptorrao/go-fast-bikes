@@ -1,0 +1,14 @@
+<% unless @random_products.empty? %>
+
+	<h3>Got <%= @random_products.size %> random product(s).</h3>	
+  
+  	<table class="products" summary="Products">
+		<thead>
+			<th>Name</th>
+			<th>Description</th>
+		</thead>
+		<tbody>		
+    	<%= render :partial => 'shared/random_product_item', :collection => @random_products %>
+		</tbody>		
+  	</table>
+<% end %>

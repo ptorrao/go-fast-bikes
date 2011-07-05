@@ -19,4 +19,6 @@ class Product < ActiveRecord::Base
   validates :name,        :presence => true, :length => { :maximum => 128 }
   validates :description, :presence => true, :length => { :maximum => 1024 }
   validates :user_id,     :presence => true
+  
+  has_attached_file :photo, :styles => { :medium => "300x300>", :thumb => "100x100>" }
 end

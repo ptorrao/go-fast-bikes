@@ -2,10 +2,7 @@ class PagesController < ApplicationController
 
   def home
     @title = "Home"
-    if signed_in?
-      @order = Order.new 
-      @feed_items = current_user.feed.paginate(:page => params[:page])
-    end
+    @random_products = Product.all(:order => 'RANDOM()', :limit => 4)
   end
 
   def contact
