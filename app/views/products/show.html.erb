@@ -11,13 +11,21 @@
   <b>User:</b>
   <%= @product.user_id %>
 </p>
-<p>
-	<%= image_tag @product.photo.url %>
-	<br />
-	<%= image_tag @product.photo.url(:medium) %>
-	<br />
-	<%= image_tag @product.photo.url(:thumb) %>
-</p>
+<% if @product.photo1.exists? then %>
+    <p>Thumb1:<%= image_tag @product.photo1.url(:thumb) %></p>
+<% end %>
+<% if @product.photo2.exists? then %>
+    <p>Thumb2:<%= image_tag @product.photo2.url(:thumb) %></p>
+<% end %>
+<% if @product.photo3.exists? then %>
+    <p>Thumb3:<%= image_tag @product.photo3.url(:thumb) %></p>
+<% end %>
+<% if @product.photo4.exists? then %>
+    <p>Thumb4:<%= image_tag @product.photo4.url(:thumb) %></p>
+<% end %>
 
-<%= link_to 'Edit', edit_product_path(@product) %> |
-<%= link_to 'Back', products_path %>
+<% if :has_photos.nil? %>
+    <p> There are no photo's attached, you can upload up to four. </p>
+<% end %>
+
+<%= link_to 'Edit', edit_product_path(@product) %> | <%= link_to 'Back', products_path %>
