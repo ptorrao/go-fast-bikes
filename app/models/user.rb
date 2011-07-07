@@ -12,7 +12,7 @@
 
 class User < ActiveRecord::Base
   attr_accessor :password
-  attr_accessible :name, :email, :password, :password_confirmation
+  attr_accessible :name, :email, :password, :password_confirmation, :admin
   
   has_many :orders, :dependent => :destroy
   has_many :products
