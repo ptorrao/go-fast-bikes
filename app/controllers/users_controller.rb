@@ -17,6 +17,7 @@ class UsersController < ApplicationController
   def new
     @user = User.new
     @title = "Sign up"
+    render :layout => 'login_page'
   end
   
   def create

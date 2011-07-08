@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title><%= title %></title>
+    	<%= csrf_meta_tag %>
+    	<%= render 'layouts/stylesheets' %>
+		<%= javascript_include_tag :defaults %>
+  	</head>
+  	<body>
+    	<div class="container">
+            <%= render 'layouts/clean_header' %>
+            <section class="round_login">
+                <div class="login">
+                    <% flash.each do |key, value| %>
+                        <%= content_tag(:div, value, :class => "flash #{key}") %>
+                    <% end %>
+                    <%= yield %>
+                </div>
+            </section>
+		    <div style="clear: both;">
+                <%= debug(params) if Rails.env.development? %>
+            </div>
+    	</div>
+  	</body>
+</html>

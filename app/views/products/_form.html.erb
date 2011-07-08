@@ -1,37 +1,57 @@
-<%= form_for @product, :as => :product, :html => { :multipart => true } do |f| %>
-  <% if @product.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@product.errors.count, "error") %> prohibited this product from being saved:</h2>
+<%= form_for @product, :as => :product, :html => {:multipart => true} do |f| %>
+    <% if @product.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@product.errors.count, "error") %> prohibited this product from being saved:</h2>
 
-      <ul>
-      <% @product.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
+          <ul>
+            <% @product.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+
+    <div class="field">
+      <%= f.label :name %>
+      <br/>
+      <%= f.text_field :name %>
     </div>
-  <% end %>
+    <div class="field">
+      <%= f.label :description %>
+      <br/>
+      <%= f.text_field :description %>
+    </div>
 
-  <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
-  </div>
-  <div class="field">
-    <%= f.label :description %><br />
-    <%= f.text_field :description %>
-  </div>
-  <div class="field">
-  	<%= f.file_field :photo1 %>
-  </div>
-  <div class="field">
-  	<%= f.file_field :photo2 %>
-  </div>
-  <div class="field">
-  	<%= f.file_field :photo3 %>
-  </div>
-  <div class="field">
-  	<%= f.file_field :photo4 %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+    <% if @product.photo1.exists? then %>
+        <%= image_tag(@product.photo1.url(:thumb), :border => 0) %>
+    <% end %>
+    <div class="field">
+      <%= f.file_field :photo1 %>
+    </div>
+    <% if @product.photo2.exists? then %>
+        <%= image_tag(@product.photo2.url(:thumb), :border => 0) %>
+    <% end %>
+    <div class="field">
+      <%= f.file_field :photo2 %>
+    </div>
+    <% if @product.photo3.exists? then %>
+        <%= image_tag(@product.photo3.url(:thumb), :border => 0) %>
+    <% end %>
+    <div class="field">
+      <%= f.file_field :photo3 %>
+    </div>
+    <% if @product.photo4.exists? then %>
+        <%= image_tag(@product.photo4.url(:thumb), :border => 0) %>
+    <% end %>
+    <div class="field">
+      <%= f.file_field :photo4 %>
+    </div>
+    <div class="field">
+      <%= f.label :price %>
+      <br/>
+      <%= f.text_field :price %>
+    </div>
+    <div class="actions">
+      <%= f.submit %>
+    </div>
 <% end %>

@@ -1,7 +1,11 @@
 /* Container */
 
 .container {
-  width: 800px;
+  width: 1000px;
+}
+
+.login_container {
+  width: 400px;
 }
 
 body {
@@ -18,10 +22,13 @@ header img {
 }
 
 section {
+  width: 980px;
   margin-top: 1em;
-  font-size: 120%;
-  padding: 20px;
+  margin-bottom: 1em;
+  font-size: 110%;
+  padding: 10px;
   background: #fff;
+  float:left;
 }
 
 section h1 {
@@ -80,6 +87,25 @@ nav ul li a:hover {
   text-decoration: underline;
 }
 
+div.main {
+    width: 760px;
+    float: left;
+}
+
+div.login {
+    margin-top: 1em;
+    font-size: 110%;
+    background: #fff;
+    margin-bottom: 1em;
+}
+
+/* Left Bar */
+div.left_bar {
+  text-align: left;
+  width: 200px;
+  float: left;
+}
+
 /* Sign up button */
 
 a.signup_button {
@@ -87,10 +113,10 @@ a.signup_button {
   margin-right: auto;
   display: block;
   text-align: center;
-  width: 190px;
+  width: 120px;
   color: #fff;
   background: #006400;
-  font-size: 150%;
+  font-size: 120%;
   font-weight: bold;
   padding: 20px;
 }
@@ -103,12 +129,25 @@ a.signup_button {
   border-radius:         10px;
 }
 
+.round_login {
+  -moz-border-radius:    10px;
+  -webkit-border-radius: 10px;
+  border-radius:         10px;
+  width: 350px;
+  padding: 30px;
+  margin-left: 30%;
+  margin-right: 30%;
+    margin-top: 40px;
+}
+
 footer {
   text-align: center;
   margin-top: 10px;
-  width: 800px;
+  padding-top: 20px;
+  width: 1000px;
   margin-left: auto;
   margin-right: auto;
+  clear:both;
 }
 
 footer nav {
@@ -237,4 +276,10 @@ form.new_order {
 form.new_order textarea {
   height: 4em;
   margin-bottom: 0;
+}
+
+fieldset {
+    padding: 0 0 0 0;
+    margin: 0 0 0 0;
+    border: 0;
 }
