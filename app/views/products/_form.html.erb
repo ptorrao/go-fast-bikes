@@ -51,6 +51,25 @@
       <br/>
       <%= f.text_field :price %>
     </div>
+    <div class="field">
+      <%= f.label :brand %>
+      <br/>
+      <%= f.text_field :brand %>
+    </div>
+    <div class="field">
+      <%= f.label :model %>
+      <br/>
+      <%= f.text_field :model %>
+    </div>
+    <div class="field">
+      <%= f.label :weight %>
+      <br/>
+      <%= f.text_field :weight %>
+    </div>
+	<%= f.hidden_field :units, :value => 0 %>
+    <div class="field">
+        <%= f.collection_select :category_id, Category.all(:order => "name"), :id, :name %>
+    </div>
     <div class="actions">
       <%= f.submit %>
     </div>

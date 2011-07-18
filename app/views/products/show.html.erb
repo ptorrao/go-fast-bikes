@@ -15,21 +15,44 @@
   <b>User:</b>
   <%= @product.user_id %>
 </p>
-<% if @product.photo1.exists? then %>
-    <p>Thumb1:<%= image_tag @product.photo1.url(:thumb) %></p>
-<% end %>
-<% if @product.photo2.exists? then %>
-    <p>Thumb2:<%= image_tag @product.photo2.url(:thumb) %></p>
-<% end %>
-<% if @product.photo3.exists? then %>
-    <p>Thumb3:<%= image_tag @product.photo3.url(:thumb) %></p>
-<% end %>
-<% if @product.photo4.exists? then %>
-    <p>Thumb4:<%= image_tag @product.photo4.url(:thumb) %></p>
-<% end %>
-
 <% if :has_photos.nil? %>
-    <p> There are no photo's attached, you can upload up to four. </p>
+    <p>There are no photo's attached, you can upload up to four.</p>
+<% else %>
+	<p>
+		<% if @product.photo1.exists? then %>
+		    <%= image_tag @product.photo1.url(:thumb) %>
+		<% end %>
+		<% if @product.photo2.exists? then %>
+		    <%= image_tag @product.photo2.url(:thumb) %>
+		<% end %>
+		<% if @product.photo3.exists? then %>
+		    <%= image_tag @product.photo3.url(:thumb) %>
+		<% end %>
+		<% if @product.photo4.exists? then %>
+		    <%= image_tag @product.photo4.url(:thumb) %>
+		<% end %>
+	</p>
 <% end %>
+<p>
+  <b>Brand:</b>
+  <%= @product.brand %>
+</p>
+<p>
+  <b>Model:</b>
+  <%= @product.model %>
+</p>
+<p>
+  <b>Weight:</b>
+  <%= @product.weight %> g
+</p>
+<p>
+  <b>Units:</b>
+  <%= @product.units %>
+</p>
+
+<p>
+  <b>Category:</b>
+  <%= @product.category.name %>
+</p>
 
 <%= link_to 'Edit', edit_product_path(@product) %> | <%= link_to 'Back', products_path %>

@@ -1,0 +1,10 @@
+<p>
+    <li>
+        <%=h category.name %>
+        <ol>
+            <%= render :partial => 'category', :collection => category.children %>
+        </ol>
+    </li>
+</p>
+
+

@@ -1,4 +1,5 @@
 GoFastBikes::Application.routes.draw do
+  resources :categories
   resources :products
   resources :users
   resources :sessions, :only => [:new, :create, :destroy]

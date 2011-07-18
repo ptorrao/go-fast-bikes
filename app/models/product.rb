@@ -12,17 +12,29 @@
 #
 
 class Product < ActiveRecord::Base
-  attr_accessible :name, :description, :price, :photo1, :photo2, :photo3, :photo4
+  attr_accessible :name, :description, :price, 
+                  :photo1, :photo2, :photo3, :photo4,
+                  :brand, :model, :weight, :units,
+                  :category_id
 
   belongs_to :user
+  belongs_to :category
 
   validates :name,        :presence => true, :length => { :maximum => 128 }
   validates :description, :presence => true, :length => { :maximum => 1024 }
   validates :price,       :presence => true
   validates :user_id,     :presence => true
-
+  validates :brand,       :presence => true
+  validates :model,       :presence => true
+  validates :weight,      :presence => true
+  validates :units,       :presence => true
+  validates :category_id, :presence => true
+  
   validates_numericality_of :price
+  validates_numericality_of :weight
+  validates_numericality_of :units
 
+  validate :check_price
 
   has_attached_file :photo1,
                     :styles => { :medium => "300x300>", :thumb => "100x100>", :tiny => "20x20" },
@@ -41,7 +53,7 @@ class Product < ActiveRecord::Base
                     :url => "/images/:class/:id/:style_:basename.:extension",
                     :default_style => :thumb
 
-  def validate
+  def check_price
     if price.nil? || price < 0.1
       errors.add(:price, "should be at least 10 cents")
     end

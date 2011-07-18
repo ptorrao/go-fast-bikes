@@ -1,6 +1,7 @@
 <tr>
-    <td><%= random_product_item.name  %></td>
-  	<td><%= random_product_item.description %></td>
+  	<td><%= random_product_item.brand %></td>
+  	<td><%= random_product_item.model %></td>
+  	<td><%= random_product_item.weight %></td>
     <td><%= link_to image_tag(random_product_item.photo1.url(:thumb), :border => 0), random_product_item %>
     <td><%= random_product_item.price %> &euro;</td>
 </tr>

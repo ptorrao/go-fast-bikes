@@ -14,11 +14,13 @@ class ProductsController < ApplicationController
 
   def create
     @product = current_user.products.build(params[:product])
+
     if @product.save
       flash[:success] = "Product created!"
       redirect_to @product
     else
       flash[:failure] = "Couldn't create the product..."
+      render :action => "new"
     end  
   end
 
@@ -49,20 +51,25 @@ class ProductsController < ApplicationController
     redirect_back_or products_path
   end
   
+  def update_units
+    @product = Product.find(params[:id])
+#    @product.update_attributes(:units, :units + params[:units])
+  end
+
   private
 
     def is_admin
       if signed_in?
-        logger.debug "BEFORE FILTER|SIGNED IN: OK"
+#        logger.debug "BEFORE FILTER|SIGNED IN: OK"
 
         if current_user.admin?
           logger.debug "BEFORE FILTER|ADMIN: OK"
         else
-          logger.debug "BEFORE FILTER|ADMIN: NOK!"
+#          logger.debug "BEFORE FILTER|ADMIN: NOK!"
           redirect_to root_path
         end
       else
-        logger.debug "BEFORE FILTER|SIGNED IN: NOK!"
+#        logger.debug "BEFORE FILTER|SIGNED IN: NOK!"
         redirect_to signin_path
       end
     end
