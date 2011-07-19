@@ -12,6 +12,12 @@ GoFastBikes::Application.routes.draw do
   match '/about',   :to => 'pages#about'
   match '/help',    :to => 'pages#help'
 
+#  match "products/categories/:id" => "products#index"
+
+  resources :categories do
+    resources :products
+  end
+
   root :to => 'pages#home'
       
   # The priority is based upon order of creation:

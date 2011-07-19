@@ -3,8 +3,17 @@ class ProductsController < ApplicationController
   before_filter :authorized_user, :only => [:destroy]
   
   def index
-    @title = "All Products"
-    @products = Product.paginate(:page => params[:page])
+
+    if (params[:category_id])
+      @category = Category.find_by_id(params[:category_id])
+	    @products = @category.products.all.paginate(:page => params[:page])
+
+      @title = @category.name + " Products"
+    else
+      @title = "All Products"
+
+      @products = Product.paginate(:page => params[:page])
+    end
   end
 
   def new

@@ -1,7 +1,7 @@
 <p>
     <% if !@category.nil? %>
         <% for category in @category.ancestors %>
-            <%= link_to h(category.name), category %> &gt;
+            <%= link_to h(category.name), category_products_url(category) %> &gt;
         <% end %>
         <%= @category.name %>
     <% end %>
@@ -9,7 +9,7 @@
 
 <div class="left_bar">
     <% Category.each_with_level(Category.root.self_and_descendants) do |category, level| %>
-      <%= link_to h(category.name), category %>(<%= level %>)<br />
+      <%= link_to h(category.name), category_products_url(category) %>(<%= level %>)<br />
     <% end %>
 </div>
 
