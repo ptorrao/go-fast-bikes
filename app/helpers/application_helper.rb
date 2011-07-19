@@ -10,6 +10,6 @@ module ApplicationHelper
   end
   
   def logo
-    logo = image_tag("logo.png", :alt => "Go Fast Bikes", :class => "round")
+    logo = image_tag("logo.png", :alt => "Go Fast Bikes", :class => "round", :size => "975x190" )
   end	
 end
