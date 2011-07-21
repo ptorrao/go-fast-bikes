@@ -1,5 +1,6 @@
 class SessionsController < ApplicationController
-  
+  before_filter :initialize_cart
+
   def new
     @title = "Sign in"
     render :layout => 'login_page'

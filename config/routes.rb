@@ -1,4 +1,6 @@
 GoFastBikes::Application.routes.draw do
+  resources :cart_items
+
   resources :categories
   resources :products
   resources :users
@@ -12,10 +14,14 @@ GoFastBikes::Application.routes.draw do
   match '/about',   :to => 'pages#about'
   match '/help',    :to => 'pages#help'
 
-#  match "products/categories/:id" => "products#index"
-
   resources :categories do
     resources :products
+  end
+
+#  match 'products/:id/cart_item'
+
+  resources :products do
+    resources :cart
   end
 
   root :to => 'pages#home'
